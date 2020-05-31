@@ -1,0 +1,126 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: dodgerblue;
+}
+
+.app-body {
+  background-color: #333333;
+  text-align: center;
+}
+
+.card-body {}
+
+button.btn.btn-primary {
+  padding: 0;
+  border-radius: 0;
+  background-color: rgba(0, 0, 0, 1) !important;
+  border: none !important;
+}
+
+.movie-poster {
+  transition-duration: .3s;
+}
+
+.movie-poster:hover {
+  transform: scale(1.1);
+  transition: all ease 500ms;
+}
+
+.dark-pill {
+  margin-right: 5px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 20px;
+}
+
+.flex-basis {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.card {
+  margin: 20px;
+  background-color: rgb(30, 30, 30) !important;
+  color: white;
+}
+
+.card-body {
+  background-color: rgb(30, 30, 30);
+  background: rgb(30, 30, 30);
+  text-align: center;
+}
+
+.list-group-item {
+  background-color: rgb(30, 30, 30) !important;
+  background: #333333;
+  border: none !important;
+  text-align: center;
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: -75px 0 0 -75px;
+}
+
+.top-text{
+  text-align: center;
+  color: #f1f1f1;
+  padding: 20px;
+}
+
+#see-more{
+  height: 30px;
+  width: 30px;
+  background-color: #f1f1f1;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  margin-bottom: 30px;  
+  margin-left: 15px;
+  border-radius: 3px;
+}
+#see-more:hover{
+  transform: scale(1.1);
+  transition: all ease 500ms;
+}
+#see-wide{
+  height: 30px;
+  width: 80px;
+  background-color: #f1f1f1;
+  font-weight: bold;
+  font-size: 13px;
+  border: none;
+  margin-bottom: 30px;  
+  margin-left: 15px;
+  border-radius: 3px;
+}
+#see-wide:hover{
+  transform: scale(1.1);
+  transition: all ease 500ms;
+}
+
+.form{
+  margin-left: 70%;
+  padding-bottom: 20px;
+}
+
+.header{
+  background-color: rgb(30, 30, 30);
+}
