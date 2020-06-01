@@ -8,20 +8,17 @@ import Banner from "./components/Banner"
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
+import ReactModal from 'react-modal';
 
 let page = 1
-let x
-let y
 
 const apiKey = process.env.REACT_APP_APIKEY;
 function App() {
   let [movieList, setMovieList] = useState(null);
   let [genreList, setGenreList] = useState(null);
-  console.log(page, "ggg")
+  let [modalOpen, setModalOpen] = useState(false);
+
   let searchContents = ''
-
-
-
 
   const getGenreList = async () =>{
     let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`
@@ -36,8 +33,18 @@ function App() {
     let data = await fetch(url);
     let result = await data.json();
     setMovieList(result.results);
-    console.log("movies", result);
+    console.log("movies list", result);
   };
+
+  const closeModal=()=> {
+    console.log("modal")
+    setModalOpen(false)
+  }
+    
+  
+  const openModal=()=>{
+    setModalOpen(true)
+  }
 
   useEffect(() => {
     getGenreList();
@@ -95,7 +102,22 @@ function App() {
 
         <Banner movieList={movieList}/>
       <div className="container">
-        <MovieList movieList={movieList} genresFromApp={genreList} />
+        <MovieList 
+        movieList={movieList} 
+        genresFromApp={genreList} 
+        openModal = {openModal}
+        />
+
+        <ReactModal isOpen={modalOpen}
+        style={
+          { 
+            overlay: {zIndex: 1000}, 
+            content: {} 
+          }}>
+          <button onClick={()=>closeModal()}>Close</button>
+          This Is Modal
+
+        </ReactModal>
       </div>
       <div className="row justify-content-center">
       <button id="see-wide" onClick={()=>seeLess()}>Go Back</button>

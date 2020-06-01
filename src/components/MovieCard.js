@@ -18,7 +18,7 @@ export default function MovieCard(props) {
         <div className="flex-basis align-content-center">
     
         <Card className="card" style={{ width: '18rem', height:'44rem'}}>
-        <Button className="poster" onClick={() => description()}type="image">
+        <Button className="poster" onClick={() => props.openModal()}type="image">
         <Card.Img variant="top" className="movie-poster" src={`https://image.tmdb.org/t/p/w300_and_h450_bestv2${movie.poster_path}`}/>
         </Button>
         <Card.Body>
