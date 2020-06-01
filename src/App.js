@@ -8,18 +8,27 @@ import Banner from "./components/Banner"
 import Button from 'react-bootstrap/Button'
 import FormControl from 'react-bootstrap/FormControl'
 import Form from 'react-bootstrap/Form'
-import ReactModal from 'react-modal';
+import Modal from './components/Modal'
 
 let page = 1
 
 const apiKey = process.env.REACT_APP_APIKEY;
+
 function App() {
   let [movieList, setMovieList] = useState(null);
   let [genreList, setGenreList] = useState(null);
-  let [modalOpen, setModalOpen] = useState(false);
+  let [openModal, setOpenModal] = useState(false);
+  let [movieURL, setMovieURL] = useState(null);
+  let [modalDescription, setModalDescription] = useState('')
 
   let searchContents = ''
 
+  const getMovie = async () =>{
+    let url = `https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=${apiKey}&language=en-US`
+    let data = await fetch(url);
+    let result = await data.json();
+    
+  }  
   const getGenreList = async () =>{
     let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`
     let data = await fetch(url);
@@ -36,14 +45,17 @@ function App() {
     console.log("movies list", result);
   };
 
-  const closeModal=()=> {
-    console.log("modal")
-    setModalOpen(false)
+  const closeModalFunc=()=> {
+    setOpenModal(false)
+    console.log(openModal,"open modal status")
   }
     
-  
-  const openModal=()=>{
-    setModalOpen(true)
+  const openModalFunc=(i)=>{
+    console.log("index",i)
+    setOpenModal(true)
+    let message = (movieList[i].overview)
+    setModalDescription(message)
+    console.log(message, "movie desc")
   }
 
   useEffect(() => {
@@ -69,7 +81,7 @@ function App() {
   }
 
 
-  if (movieList === null || genreList === null) {
+  if (movieList === null || genreList === null || openModal === undefined){
     return (<Loader
       className="loader"
       type="TailSpin" 
@@ -103,21 +115,18 @@ function App() {
         <Banner movieList={movieList}/>
       <div className="container">
         <MovieList 
-        movieList={movieList} 
-        genresFromApp={genreList} 
-        openModal = {openModal}
+        movieList = {movieList} 
+        genresFromApp = {genreList} 
+        openModalFunc = {openModalFunc}
+        />
+        <Modal 
+          movieList = {movieList}
+          openModalFunc = {openModalFunc} 
+          closeModal = {closeModalFunc}
+          openModal = {openModal}
+          modalDescription = {modalDescription}
         />
 
-        <ReactModal isOpen={modalOpen}
-        style={
-          { 
-            overlay: {zIndex: 1000}, 
-            content: {} 
-          }}>
-          <button onClick={()=>closeModal()}>Close</button>
-          This Is Modal
-
-        </ReactModal>
       </div>
       <div className="row justify-content-center">
       <button id="see-wide" onClick={()=>seeLess()}>Go Back</button>
