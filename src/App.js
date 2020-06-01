@@ -18,16 +18,17 @@ function App() {
   let [movieList, setMovieList] = useState(null);
   let [genreList, setGenreList] = useState(null);
   let [openModal, setOpenModal] = useState(false);
-  let [movieURL, setMovieURL] = useState(null);
+  let [movieUrl, setMovieUrl] = useState(null);
   let [modalDescription, setModalDescription] = useState('')
-
   let searchContents = ''
 
-  const getMovie = async () =>{
-    let url = `https://api.themoviedb.org/3/movie/{movie_id}/videos?api_key=${apiKey}&language=en-US`
+
+  const getMovieVideo = async (id) =>{
+    let url = `https://api.themoviedb.org/3/movie/${id}/videos?api_key=${apiKey}&language=en-US`
     let data = await fetch(url);
     let result = await data.json();
-    
+    setMovieUrl(result.results)
+    console.log(result.results,"url video in app")
   }  
   const getGenreList = async () =>{
     let url = `https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}&language=en-US`
@@ -35,27 +36,24 @@ function App() {
     let result = await data.json();
     getNowPlayingMovie();
     setGenreList(result.genres);
-    console.log("movie genres", result);
   }
   const getNowPlayingMovie = async () => {
     let url = `https://api.themoviedb.org/3/movie/now_playing?api_key=${apiKey}&language=en-US&page=${page}`;
     let data = await fetch(url);
     let result = await data.json();
     setMovieList(result.results);
-    console.log("movies list", result);
   };
 
   const closeModalFunc=()=> {
     setOpenModal(false)
-    console.log(openModal,"open modal status")
   }
     
   const openModalFunc=(i)=>{
-    console.log("index",i)
     setOpenModal(true)
     let message = (movieList[i].overview)
     setModalDescription(message)
-    console.log(message, "movie desc")
+    let id = (movieList[i].id)
+    getMovieVideo(id)
   }
 
   useEffect(() => {
@@ -69,7 +67,6 @@ function App() {
     else{
     page = i
     }
-    console.log(page, "page number")
     getGenreList();
   }
 
@@ -119,7 +116,8 @@ function App() {
         genresFromApp = {genreList} 
         openModalFunc = {openModalFunc}
         />
-        <Modal 
+        <Modal
+          movieUrl = {movieUrl} 
           movieList = {movieList}
           openModalFunc = {openModalFunc} 
           closeModal = {closeModalFunc}
